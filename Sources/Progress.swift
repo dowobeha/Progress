@@ -27,6 +27,7 @@
 
 
 // MARK: - ProgressBarDisplayer
+import Foundation
 
 public protocol ProgressBarPrinter {
     mutating func display(_ progressBar: ProgressBar)
