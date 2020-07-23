@@ -34,17 +34,18 @@ public protocol ProgressBarPrinter {
 
 struct ProgressBarTerminalPrinter: ProgressBarPrinter {
     var lastPrintedTime = 0.0
+    var stderr = FileHandle.standardError
 
     init() {
         // the cursor is moved up before printing the progress bar.
         // have to move the cursor down one line initially.
-        print("")
+        print("", to: &stderr)
     }
     
     mutating func display(_ progressBar: ProgressBar) {
         let currentTime = getTimeOfDay()
         if (currentTime - lastPrintedTime > 0.1 || progressBar.index == progressBar.count) {
-            print("\u{1B}[1A\u{1B}[K\(progressBar.value)")
+            print("\u{1B}[1A\u{1B}[K\(progressBar.value)", to: &stderr)
             lastPrintedTime = currentTime
         }
     }
